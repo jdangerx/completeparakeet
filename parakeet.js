@@ -68,7 +68,13 @@ function fetch_next_parakeet() {
   $.getJSON(flickr_url, function(data) {
     if (data.stat == "ok") {
       var i = Math.ceil(Math.random() * data.photos.photo.length);
-      var photo = data.photos.photo[i];
+      if (data.photos.photo !== undefined) {
+        var photo = data.photos.photo[i];
+      } else {
+        fetch_next_parakeet();
+        return;
+      }
+
       var attrib = "";
       if (license = license_list[photo.license]) {
         if (license.url) {
