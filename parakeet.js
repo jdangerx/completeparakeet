@@ -107,7 +107,7 @@ function get_item(itemnum){
 
 function complete_item(){
   point_value = Number($("#pointval").val());
-  if (point_value < 0 || isNan(point_value)) {
+  if (point_value < 0 || isNaN(point_value)) {
     $("#woohoo").html("Please enter a valid point value :(");
     $("#woohoo").fadeIn();
     window.setTimeout(function(){$("#woohoo").fadeOut();}, 800);
