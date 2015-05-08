@@ -5,6 +5,7 @@ var parakeets_earned = 0;
 var parakeets_shown = 0;
 var search_for = 'parakeet';
 var points_for_reward = 1;
+var flickr_search_term = "";
 
 var valid_licenses="4,5,7";
 /*
@@ -58,7 +59,8 @@ function fetch_next_parakeet() {
   } else {
     // add "cute" to search if item is selected from dropdown. it just
     // works better that way.
-    flickr_search_term = search_for + ",cute";
+    // flickr_search_term = search_for + ",cute";
+    flickr_search_term = search_for;
   }
 
   var flickr_url = "https://api.flickr.com/services/rest/?format=json&sort=interestingness-desc&method=flickr.photos.search&license=" + valid_licenses + "&extras=owner_name,license&tags=" + flickr_search_term + "&tag_mode=all&api_key=5dfc80756edad8d0566cf40f0909324e&jsoncallback=?";
