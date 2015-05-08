@@ -107,8 +107,8 @@ function complete_item(){
   }
   current_point_count += point_value;
   parakeets_earned = current_point_count / points_for_reward;
-  console.log(current_point_count, points_for_reward, parakeets_earned);
   if (parakeets_earned >= parakeets_shown) {
+    console.log("Showing parakeet!");
     show_parakeet();
     parakeets_shown = parakeets_earned;
   }
