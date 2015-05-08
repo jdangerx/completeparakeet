@@ -93,7 +93,6 @@ function fetch_next_parakeet() {
 
 function get_rand_item(){
   var randnum = Math.random()*list.length | 0;
-  console.log("Got random item!");
   get_item(randnum);
 }
 
