@@ -1,0 +1,2796 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Complete? Parakeet!</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link href="http://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" type="text/css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+<style type="text/css">
+body {  background: url(parakeetbg.gif) repeat #6AAFDA }
+::-moz-selection {
+  background: #6AAFDA;
+  color: #fff;
+}
+::selection {
+  background: #6AAFDA;
+  color: #fff;
+}
+
+#main {
+  margin: 50px auto;
+  background-color: #fff;
+  width: 1000px;
+  padding: 1em 2em 2em 2em;
+  border: 1px solid #5896bc;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 0px 5px 2px #5896bc;
+  -moz-box-shadow: 0px 0px 5px 2px #5896bc;
+  box-shadow: 0px 0px 5px 2px #5896bc;
+}
+
+#about {
+  margin: 50px auto;
+  background-color: #fff;
+  width: 1000px;
+  padding: 1em 2em 2em 2em;
+  border: 1px solid #5896bc;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 0px 5px 2px #5896bc;
+  -moz-box-shadow: 0px 0px 5px 2px #5896bc;
+  box-shadow: 0px 0px 5px 2px #5896bc;
+}
+
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+  max-width: 100%;
+}
+#itemarea {
+  width: 580px;
+  height: 400px;
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical;
+}
+h1 {
+  font-size: 3em;
+  margin: 0;
+}
+h2 {
+  font-size: 1.7em;
+  margin: 0;
+}
+a, a:visited {
+  color: #5896bc;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {  color: #305c78 }
+a:focus {  outline: thin dotted; }
+a:hover, a:active {  outline: 0; }
+p {  font-size: .9em }
+h1, #controls, h2, .hide {
+  font-family: 'Indie Flower', cursive;
+  font-weight: normal;
+}
+.hide {
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.warning {
+  background-color: #f7f8c3;
+  border: 1px solid #f7ce6d;
+  padding: 1em 1em 0 1em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.warning h2 {  font-size: 2em }
+.warning a {
+  font-size: 1.5em;
+  color: #000;
+  cursor: pointer;
+}
+.hidelink {
+  text-align: right;
+  padding-right: 1em;
+}
+#displayPoints, #about, #parakeetCredit, .warning {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 200;
+}
+.meta {  padding-left: 2em }
+#parakeetFrame {
+  float: right;
+  height: 400px;
+  width: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#nextParakeet {  display: none }
+#parakeetCredit {
+  color: #999;
+  width: 100%;
+  font-size: .8em;
+  margin-top: 420px;
+  text-align: right;
+}
+
+#woohoo {
+    color: #FF0000;
+    font-size: 1.5em;
+}
+</style>
+
+</head>
+<body onLoad="set_search($('#search').val()); set_title(); get_rand_item()">
+<div id="main">
+<a name="top"></a>
+<h1>Complete? <span id="titleParakeet">Parakeet!</span><span id="titleSearch"></span></h1>
+<div id="parakeetFrame">
+  <div id="parakeetCredit"></div>
+</div>
+
+<button id="randombutton">Random!</button>
+
+<div id="itemarea">
+<p>Complete item
+<input id="itemnum" onChange="get_item(this.value)">,
+<p>
+<span id="itemtext"></span>
+<p>Which is worth <input id="pointval"></input> points.
+<p>
+<button id="completebutton" onClick="complete_item();">Complete!</button>
+<div id="woohoo" hidden="true">Woohoo!</div>
+</div>
+<form id="controls">
+  <span class="meta">
+    Fresh
+    <select id="search" onChange="set_search(this.value)">
+    <option value="parakeet">parakeet</option>
+    <option value="puppy">puppy</option>
+    <option value="kitten">puppy</option>
+    <option value="bunny">bunny</option>
+    </select>
+    every
+    <select id="howmany" onChange="set_reward(this.value)">
+    <option value="1">1</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    </select> points
+  </span>
+  <span class="meta">
+  Current point count: <span id="displayPoints">0</span>
+  </span>
+</form>
+</div> <!-- main -->
+
+<div id="about">
+  <h2>About</h2>
+  <p>
+  Complete Parakeet was adapted from Written Kitten
+  by <a href="http://twitter.com/Skud"
+  rel="author">Skud</a>, <a href="http://twitter.com/aquaprofundanet"
+  rel="author">Emily</a>
+  and <a href="https://github.com/Skud/writtenkitten/blob/master/CONTRIBUTORS.md">contributors</a>.
+  </p>
+  <p>
+  Images are randomly selected from Flickr&apos;s &ldquo;most
+  interesting&rdquo; photos tagged with the search term of your
+  choice.  You can specify your own search term by editing the URL in
+  your browser's location bar <a
+  href="http://writtenkitten.net/?search=dinosaur">like this</a>.
+  </p>
+  <p>
+  Complete? Parakeet!
+  is <a href="http://github.com/Skud/writtenkitten">open source</a>,
+  as is <a href="http://github.com/Skud/writtenkitten">Written?
+  Kitten!</a>.</p>
+  <p>
+  Enjoy!
+  </p>
+  <img src="" id="nextKitten"/>
+</div> <!-- about -->
+
+</body>
+
+<div id="the-list" hidden="true">
+[
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 1,
+        "page": 1,
+        "text": "A copy of the 2015  University of Chicago Scavenger Hunt List.",
+        "value": "1 point"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 2,
+        "page": 1,
+        "text": "A copy of the 2014 University of Chicago Alumni Weekend Scavenger Hunt List.",
+        "value": "2 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 3,
+        "page": 1,
+        "text": "Is your refrigerator running, \\emph{literally}? THEN YOU'D BETTER CANVAS FOR IT! SHOW YOUR SUPPORT, AND HELP IT GET ELECTED!",
+        "value": "5 points; 2 extra points for the ``winner''"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 4,
+        "page": 1,
+        "text": "The worst part about having Judgment on a Sunday is that we have to miss the ball-game. Keep the whole room at Judgment up to date on the score of the Sox or Cubs using your own Compton Electric Base Ball Game Impersonator, Nokes Electrascore, Play-o-Graph, Jackson Manikin Baseball Indicator, or similar product of your own construction.",
+        "value": "60 points for making it; 80 points for finding it"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 5,
+        "page": 1,
+        "text": "A Derek Jeter Sex Parting Gift Basket, sans gifts. Must be verified in the same way as the Craigslist posting.",
+        "value": "3 Jeets Jeets Jeets points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 6,
+        "page": 1,
+        "text": "Printed selfies of your Captains taken on a Game Boy camera.",
+        "value": "12 points for gray; 15 points for color"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 7,
+        "page": 1,
+        "text": "Go on Xbox Live\\tr\\ and demonstrate the cold hard logic of your modus pwnens. Points for clarity and educational value of your lecture on formal logic, as well as your ability to speak in a language the n00bs will understand. You'd better maintain a K/D ratio above .75 or there is no way they'll take you seriously.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 8,
+        "page": 1,
+        "text": "Spying a billboard on the road out of Loda, the Bauxite Troll realizes it can be something more. It can be a parent.",
+        "value": "2 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 9,
+        "page": 1,
+        "text": "This year's Scav Olympics will be broadcast on Twitch! Well, not really, but you should still send four team members ready to simulate the chat experience from the peanut gallery. They should hold up emoticon signs while speaking the text, recite verbal copypasta, and be able to give any !songname",
+        "value": "and sing the lyrics). Grey Face 8 space points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 10,
+        "page": 1,
+        "text": "A scorecard from a Major League Baseball no-hitter, officially licensed by the home team.",
+        "value": "9 for no hitter; 21 points above replacement for a perfect game"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 11,
+        "page": 1,
+        "text": "An article published in a major academic journal that quotes an NBA player in its title.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 17,
+        "min_val": 17,
+        "number": 12,
+        "page": 1,
+        "text": "A Tomy Racing Turbo.",
+        "value": "17 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 13,
+        "page": 1,
+        "text": "Complete my driving experience by simulating racing-car noises with your mouth. You must specify what kind of engine of you are imitating and will be rewarded for realism.",
+        "value": "5 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 14,
+        "page": 1,
+        "text": "Okay we probably can't drink Red Label\\tr\\ on the Red Line, Green Label\\tr\\ on the Green Line, or Blue Label\\tr\\ on the Blue Line. But surely you can make each bottle into a model ``L'' car using a brown paper bag for a fun (and entirely discrete) toy!",
+        "value": "10, 20, or 30 points, respectively"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 15,
+        "page": 1,
+        "text": "Now this we can do: drink Orange Crush\\tr\\ on the Orange Line, Mello Yello\\tr\\ on the Yellow Line, Dr. Brown's\\tr\\ on the Brown Line, Grape Soda on the Purple Line, and Pepto Bismol\\tr\\ on the Pink Line. Be sure to share with any random passengers in your car!",
+        "value": "1.5 points each"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 16,
+        "page": 1,
+        "text": "A Proptronics television.",
+        "value": "5 points; plus 0.2 points per each diagonal inch"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 17,
+        "page": 1,
+        "text": "He's \\emph{sooo} hot dog. At the end of their odyssey---in Atlanta---the Administration discovers that weary Paul Bunyon was just hungry all along! Although spinach is reasonably high in iron, a growing boy needed a high protein snack! Having learned a valuable lesson about nutrition, the Administration snaps a last selfie with Paul and heads home.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 18,
+        "page": 1,
+        "text": "A scholarship athlete in League of Legends\\tr\\ with their scholarship-offer letter, in person, either at Judgment or a big event.",
+        "value": "10 points; 2 extra points if they participate in one of the ``live-streamed'' Scav Olympics events"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 19,
+        "page": 2,
+        "text": "After another of my famously lavish parties, I sometimes walk alone out to Promontory Point at exactly 10:00 p.m.\\ Thursday and glance lakeward, out at a blinking light on some distant shore, and think of Daisy Buchanan.  That light winks on and off, unattainable, a powerful metaphor for---wait, is that Morse code?",
+        "value": "5 points for lights over a mile away; 15 points for lights over 5 miles away; 0 points for lights that are only metaphors"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 20,
+        "page": 2,
+        "text": "Along routes I-44 and I-55, the Administration is shocked to find out who ISIS's best friend is. They feel likewise when they find out who's a liar and a miscreant.",
+        "value": "1 point"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 21,
+        "page": 2,
+        "text": "Along the road, the non-driving members of the Administration play the ancient Missourian Game: Hey Cow. At any significant road side confluence of cows, the Administration, while the Surrey is moving, will roll down their windows, and yell ``HEY COW!'' The Administration shall then count how many cows look at them and record the number and the location of the cows.",
+        "value": "5 points for your Hey Cow logbook"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 22,
+        "page": 2,
+        "text": "A team member's genome, sequenced and aligned to 30x coverage, plus the rest of them, at Judgment. Only IGV formats will be accepted.",
+        "value": "5 points for poo sequence; 7 points for WES; 15 for WGS; 1 point for genotyped SNPs."
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 23,
+        "page": 2,
+        "text": "In Chester, Dread Pirate Popeye mourns his frozen friends. His evil hand chuckles at its dastardly \\emph{hand}iwork. At last it had revenge on Popeye's friends who had spurned it! At the statue of Olive Oyl, his love, Popeye prostrates himself, dejected on the ground and throws down his spinach in despair.  His evil hand laughs at his misery.",
+        "value": "1 point per statue; 2 bonus points for pictures with all 9 statues"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 24,
+        "page": 2,
+        "text": "A misleading metronome: via the turn of a dial on a hidden remote, it must gradually speed up and slow down its pace to disturb the unwitting musician.",
+        "value": "9 points for analog; 5 points for digital"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 25,
+        "page": 2,
+        "text": "Have you ever had a song stuck in your head for weeks and couldn't remember the name? You know, that one song by that girl or guy with the hair that goes a-boo boop boop. Now, imagine you have about eighty songs rattling around there all at once because a music industry wizard cursed you for illegally downloading. Help! Check our website for a printout of the best descriptions we could make of popular music.",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 26,
+        "page": 2,
+        "text": "\\`{A} la ``I'm Google,'' connect these two images (\\url{scavhunt.uchicago.edu/Goog.html}) with a spectrum of original photos as seamlessly as possible. Minimum 30 photos.",
+        "value": "11 pooints"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 27,
+        "page": 2,
+        "text": "Change a lightbulb in a cathedral or museum with one of those lightbulb-changing poles.",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 28,
+        "page": 2,
+        "text": "Send your best maze builders and runners to the Quads on Thursday at 2:30 p.m.\\ for a good old-fashioned showdown.  Each team will have 20 minutes to construct a maze on the Quad using stakes and rope.  Three other teams' maze runners will then race the maze, with combined times for completion representing the maze builder's score.",
+        "value": "8 points for participation; 5 extra points for the winner"
+    },
+    {
+        "max_val": 175,
+        "min_val": 175,
+        "number": 29,
+        "page": 2,
+        "text": "Business cycle? More like biogeochemical cycle! Create a MONIAC-style machine that dynamically models one of the canonical cycles in nature, with labels and illustrations to match. Be prepared to show us how the system changes in response to a change in the environment.",
+        "value": "175 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 30,
+        "page": 2,
+        "text": "The Administration rocks out with the Precious Moments Figurine Band.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 31,
+        "page": 2,
+        "text": "You know about BURMY and how they come in different forms? Do you have a form of that there BURMY from somewhere on campus?\\textellipsis What, you don't like `em?! They're kind of mooshy and cute!",
+        "value": "7 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 32,
+        "page": 2,
+        "text": "TBurmyA",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 33,
+        "page": 2,
+        "text": "Get sweaty-in-a-good-way with the latest, not-at-all-copyright-infringing workout fad sweeping the nation: Scavumba Fitness! You know, like Zumba\\tr\\ but with Scav! Have your bubbliest Scavumba instructor head to the Henry Crown Green Room at 1:00 p.m.\\ on Friday to lead a routine set to a past Scav Theme Song chosen at Morgunver\\dh ur. Points will be based on quality of choreo and charisma of instructor.",
+        "value": "11 points; plus 7 points if you bring 4 or more Scavvies to participate"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 34,
+        "page": 2,
+        "text": "Microhenge! It's like Stonehenge, only made out of space age polymers using multi-photon lithography! Don't you understand?",
+        "value": "12 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 35,
+        "page": 3,
+        "text": "Ain't no rule says a brewery has to be Irish to be able to certify the world's largest things. Ain't no rule. Get a Chicago-area brewery or distillery to officially declare the University of Chicago Scavenger Hunt the world's largest and provide the appropriate certificate.",
+        "value": "11 percent ABV points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 36,
+        "page": 3,
+        "text": "A geode that, when broken open, reveals the tiny elves and gnomes who have been chipping away at its insides all along.",
+        "value": "7 dwarves points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 37,
+        "page": 3,
+        "text": "Where on the Precious Moments Figurine Chapel campus can you find a disembodied blue angel face? What about a child watering a lamb?",
+        "value": "2 points each"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 38,
+        "page": 3,
+        "text": "It's a two-person synchronized cocktail shake routine! Take as your inspiration the `80s movie \\emph{Cocktail}, which came out before you were born so ask your dad about it. Your liquids need not be alcoholic, but should your routine not be shaken with sassy synchrony, my soul shall not be stirred.",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 39,
+        "page": 3,
+        "text": "He's \\emph{sooo} weary!' Weary Paul Bunyan in University Park needs some perking up. Dread Pirate Popeye's haunted hand offers Paul some spinach while PreshMo takes a nap on his shoe.",
+        "value": "5 absolutely exhausted points"
+    },
+    {
+        "max_val": 25.15,
+        "min_val": 25.15,
+        "number": 40,
+        "page": 3,
+        "text": "Unless your parents cheaped out and got you Saige\\tr\\ on sale for Christmas last year, we've all got Isabelle\\tr, 2014's American Girl of the Year\\tm, an inspired dancer who discovers her own way to shine. But what about the hot gift of 500 years from now, 2515's Girl of the Year KatelynUnit 472-B? Show you've got your eye on the future with your very own KatelynUnit, her Standard Issue Mars Family Pod and Rover Playset, and her starter trio of books---\\emph{STANDARD GREETINGS KatelynUnit 472-B}, \\emph{KatelynUnit 472-B Saves The Never-Ending Day (Because We Don't Get Night Anymore)}, and \\emph{KatelynUnit Learns A Lesson (About Submitting To Her Robot Overlords)}.",
+        "value": "25.15 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 41,
+        "page": 3,
+        "text": "Immoral Roberts gives Roger Ebert a thumbs down in Champaign. PreshMo picks a comfy movie seat next to Roger for a nap.",
+        "value": "4 star points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 42,
+        "page": 3,
+        "text": "A signed, glossy headshot of Steve Dolinksy, endorsing either a Chicago-area restaurant, your team-cooked meals, or a campus dining hall.",
+        "value": "4 points; 8 points; 8 points with polite doubt, respectively"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 43,
+        "page": 3,
+        "text": "Good boys do fine always.  Every good boy, doing fine.  Who's a good boy? WHO'S A GOOD BOY?  Is it you!?  It is you!!  In costume!  Barking, woofing, and howling a multi-part rendition of ``Hound Dog\" or this year's Theme Song!",
+        "value": "9 points for at least three good boys"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 44,
+        "page": 3,
+        "text": "At the Heavener Runestone, Dread Pirate Popeye is overwhelmed in his excitement about ancient mariners coming to Oklahoma and prevails upon the rest of the Administration to reenact the Viking rowboat coming to Heavener. PreshMo holds up a new rune in front of the stone, enacting the yet to be designed ``Odin to Joy.''",
+        "value": "12 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 45,
+        "page": 3,
+        "text": "And it seems to me // you lived your life // like a candle in the wind\\textellipsis An unbaffled wax candle that stays lit through increasing windspeeds.",
+        "value": "Up to 14 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 46,
+        "page": 3,
+        "text": "A Lunchables\\tr-size Taco Town taco.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 50,
+        "min_val": 50,
+        "number": 47,
+        "page": 3,
+        "text": "Stonehenge on the Quads!!! It's like Stonehenge, but made on the Quads!!!! Don't you understand!?!?!?! Bring your actual-size trilithon to the center of the Quads at 1:00 p.m.\\ on Thursday so they can be joined with those of the other teams to create one giant henge. Also send one (1) accompanying druid with your contribution, so they can sing druidic songs and perform small rituals during and after the erection of the monument.",
+        "value": "50 points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 48,
+        "page": 3,
+        "text": "The Bauxite Troll wonders why all the trolls at the Dungeons and Dragons park are so naked, and attempts to temporarily clothe their nakedness. Immoral Roberts practices Dark Magic with the Wizards, while Dread Pirate Popeye teams up with his evil hand in an attempt to defeat the sea monster.",
+        "value": "11 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 49,
+        "page": 3,
+        "text": "The country and century of origin for the larger of the two bladed weapons that are property of the University of Chicago Libraries.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 50,
+        "page": 4,
+        "text": "Alright Jonathan Estrada, it was cute when you were four, but your act is getting a little old. American states? Pssh, amateur hour is over, kid. At Judgment, dazzle me with your European country cheese-nibbling knack. BYOKraft Singles.",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 51,
+        "page": 4,
+        "text": "How will you stack up in a Jenga\\tr\\ competition? Could you topple Chris Downey? Send your two best architects to the  Reynolds Club South Lounge at 4:00 p.m.\\ on Thursday to see who stands the tallest.",
+        "value": "3 points for participation; 8, 4, and 3 points for 1\\st, 2\\nd, and 3\\rd, respectively"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 52,
+        "page": 4,
+        "text": "It's the leaning tower of Cheeza! Using one (1) can of Easy Cheese\\tm, you'll have thirty (30) seconds to create the tallest freestanding structure. BYOEZ.",
+        "value": "1 point per inch, max 10"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 53,
+        "page": 4,
+        "text": "Wearing a tea-shirt knit from unused teabags, steep in your giant mug-shaped Jacuzzi\\tr\\ and drink your plentiful liquid.",
+        "value": "8-tean points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 54,
+        "page": 4,
+        "text": "I'm tired of these lamb-skin flutes, and now I'm looking for something a bit more\\textellipsis sterile. Perform the sexiest song those lips could play on a condom bagpipe.",
+        "value": "5.4 magnum points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 55,
+        "page": 4,
+        "text": "The smell of spring is in the air!  Carve an idyllic meadow relief out of Irish Spring\\tr\\ soap, complete with the soft cooing of a mourning Dove\\tr\\ and the pitter-patter of a baby Ivory\\tr\\ elephant.",
+        "value": "9 points; 12 points if your peaceful scene is threatened by a quickly-moving Lava\\tr\\ flow"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 56,
+        "page": 4,
+        "text": "TBA",
+        "value": "2 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 57,
+        "page": 4,
+        "text": "Bring us the \\emph{Barefoot Contessa} episode where Ina Garten shows viewers the secret to the perfect homemade yellowcake uranium. Jeffrey will love this!",
+        "value": "7 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 58,
+        "page": 4,
+        "text": "An Eskimo Pie, in a wrapper. What flavor? Eskimo-ice-cream, of course!",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 59,
+        "page": 4,
+        "text": "Man, getting into graduate school is hard---programs for a PhD in Horribleness are super competitive. How else will you gain admission to the Evil League of Evil? Pad your team's resume with a one-page letter of condemnation from the tenured professor of your choice.",
+        "value": "4.0 horrible points"
+    },
+    {
+        "max_val": 15,
+        "min_val": 15,
+        "number": 60,
+        "page": 4,
+        "text": "Render the campus map in one of the following styles: \\emph{Risk}, Pokemon Universe, \\emph{Candy Land}, Middle Earth, \\emph{Catan}, or another visually stunning style of your choosing.",
+        "value": "15 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 61,
+        "page": 4,
+        "text": "Fold the most difficult of all origami structures---a snow monkey riding a flying dragon while drinking tea on a ladder in December. Include photos of your progress. Three regular-polygonal sheets of paper, no cuts.",
+        "value": "4$^2$ points"
+    },
+    {
+        "max_val": 20,
+        "min_val": 20,
+        "number": 62,
+        "page": 4,
+        "text": "When it rains, it pours. At Judgment, open an umbrella that rains, and \\emph{only} on its user.",
+        "value": "20 points"
+    },
+    {
+        "max_val": 27,
+        "min_val": 27,
+        "number": 63,
+        "page": 4,
+        "text": "Red Green's going green! Make tracks by outfitting your bike with two functional shoe tires, suitable for their own segment on Handyman Corner.",
+        "value": "27 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 64,
+        "page": 4,
+        "text": "EGOT LEGO\\tr.  We've already seen an Oscar, now we want the others.",
+        "value": "4 points each"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 65,
+        "page": 4,
+        "text": "Actually, fuck LEGO\\tr.  That award you just got? It's a cookie (*crunch*). Proceed to take a bite out of your extremely realistic look-alike.",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 66,
+        "page": 4,
+        "text": "An authentic World War II bombshell, wearing a blonde wig.",
+        "value": "6 points; 19.45 points if you bring it to Judgment"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 67,
+        "page": 4,
+        "text": "Have a meteorologist announce, on live television, that your team makes it rain.",
+        "value": "Channel 9 WGN points"
+    },
+    {
+        "max_val": 24,
+        "min_val": 24,
+        "number": 68,
+        "page": 4,
+        "text": "The only fault in \\emph{Hair: The American Tribal Love-Rock Musical} was its lack of proper accompaniment. To remedy this, play ``Aquarius''  on your string instrument strung with real human hair.",
+        "value": "24 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 69,
+        "page": 4,
+        "text": "This ain't no Little League ball. Light up the radar guns with a blazing four-seamer fastball at J. Kyle Anderson field.  And we mean fast.",
+        "value": "25 points for a pitch as fast or faster than 95 MPH; 1.5 points deducted for each MPH under 95"
+    },
+    {
+        "max_val": 16,
+        "min_val": 16,
+        "number": 70,
+        "page": 4,
+        "text": "Perform a live rendition of Marc-Andr\\'{e} Hamelin's \\emph{Circus Galop}, up to the second ending of the first repeat. One piano, up to six hands, and no fucking tempo changes.",
+        "value": "16 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 71,
+        "page": 5,
+        "text": "A few of our favorite things.",
+        "value": "1 point per thing for up to ten things; 5 points per thing beyond that. Only actual things, not recreations thereof, are acceptable"
+    },
+    {
+        "max_val": 17,
+        "min_val": 17,
+        "number": 72,
+        "page": 5,
+        "text": "DialoGo-Bot go! Why wait a year for what a child's hands can accomplish in seconds? Produce an action figure version of Dialogo that transforms into a hammer-and-sickle-wielding robot.",
+        "value": "17 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 73,
+        "page": 5,
+        "text": "A tasteful video montage that both commemorates the Scavvencouple's special day and provides incontrovertible proof that the ceremony was haunted by Real Ghosts.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 74,
+        "page": 5,
+        "text": "Dragon Hunt! At the Dungeons and Dragons Park, the Administration snaps pics of as many dragons they can find.",
+        "value": "0.2 points per dragon, max 10 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 75,
+        "page": 5,
+        "text": "Brr, amirite? Gucci Mane knows the score: the side of your face is just the place for an ice cream cone. Why get melty goo all over your hands when you could be multitasking? Construct a device that holds a pair of ice cream cones on each side of your head, foam dome-style, and completely without the use of hands, can pivot them mouthwards to be consumed at your leisure. Must be demonstrated at Judgment.",
+        "value": "8 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 76,
+        "page": 5,
+        "text": "Immoral Roberts gazes upon the prayer tower built by his alter ego and nemesis. To counteract the prayers, he directs the Administration to construct a human tower for his dastardly Reyarp.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 77,
+        "page": 5,
+        "text": "That ogre had the right idea---grind some bones to make me bread!",
+        "value": "Fee-five-fo-fum points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 78,
+        "page": 5,
+        "text": "A performance by one of the following underappreciated \\UofC\\ a cappella groups: Unaccompanied Minors, Rhythm and Druze, Voices in Your Bread.",
+        "value": "10 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 79,
+        "page": 5,
+        "text": "Rabbit ice.",
+        "value": "9 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 80,
+        "page": 5,
+        "text": "TBA",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 81,
+        "page": 5,
+        "text": "A team member dragging the Stone of Shame into Judgment.",
+        "value": "7 points. You are expected to drag the Stone of Triumph into your headquarters if your team wins the Hunt or said victory will be declared null and void"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 82,
+        "page": 5,
+        "text": "The Administration passes through Walnut Ridge. Although it is a short footnote in their storied journey, they try to find 10 of the hidden items Danny West put in his landmark sculpture.",
+        "value": "0.5 points per item, 5 points maximum"
+    },
+    {
+        "max_val": 20,
+        "min_val": 20,
+        "number": 83,
+        "page": 5,
+        "text": "An entry suitable for the Schildbach Xylotheque.",
+        "value": "20 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 84,
+        "page": 5,
+        "text": "Have a third year in the College step on the Reynolds Club Seal. Have a Purdue junior step on the clock tower seal. Have a Brown junior step on Pembroke Seal. Sit in front of Edwin Landseer's polar bear painting and successfully pass a test.",
+        "value": "1, 2, 5, and 10 points, respectively"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 85,
+        "page": 5,
+        "text": "At the corner of No Name and Giant City, PreshMo attempts to rename No Name Road. As is typical, however, PreshMo's sign is upside down.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 86,
+        "page": 5,
+        "text": "Catch us a squonk.",
+        "value": "4 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 87,
+        "page": 5,
+        "text": "The Necronompigskon. Create a football with the face from the book in \\emph{Evil Dead}. (Must be actual tanned hide. Does not have to be real human skin).",
+        "value": "12 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 88,
+        "page": 5,
+        "text": "A photograph of yourself, at exactly Squid-Froggy, under the appropriate clock.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 16,
+        "min_val": 16,
+        "number": 89,
+        "page": 5,
+        "text": "A splurge gun. Must be fully functional (don't end up like Knuckles). Bonus points if it is fired by a year 6 Briton.",
+        "value": "16 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 90,
+        "page": 5,
+        "text": "It is a patent oversight that Twitch does not cater to twitchers. Attain a viewership of more than 100 on your livestreaming playthrough of the PC classic \\emph{Bird Watcher: The Interactive Birding Game} or its ilk.",
+        "value": "5 points; 20 extra points for more than 1000"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 91,
+        "page": 6,
+        "text": "Marshall Mabey deserves a place alongside John Henry and Paul Bunyan as a true American folk hero.  Compose a hyperbolic ballad about how the famous sandhog cheated death on that day in 1916.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 92,
+        "page": 6,
+        "text": "At the the little rock in Little Rock, the Bauxite Troll wonders if it could someday adopt a little rock all its own. PreshMo enacts ``The Best Adventures are Shared with a Friend'' with the merman on top of ``Open Window.''",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 93,
+        "page": 6,
+        "text": "Scaveke Pis---strengthen the tie between Chicago and her sister city, Brussels, by erecting a urinating statue outside your Headquarters.",
+        "value": "35 points; 5 additional points if you honor the tradition by using your fountain to dispense free beverages to the public"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 94,
+        "page": 6,
+        "text": "A skate key.",
+        "value": "6 points; 2 bonus points if you use it to adjust your roller skates."
+    },
+    {
+        "max_val": 23,
+        "min_val": 23,
+        "number": 95,
+        "page": 6,
+        "text": "An analog videogame played on an oscilloscope screen.",
+        "value": "23 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 96,
+        "page": 6,
+        "text": "\\emph{This is Neoteny}---the theatrical trailer for Judd Apatow's latest funny but melancholy ensemble comedy about amphibians who just can't seem to grow up.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 97,
+        "page": 6,
+        "text": "Downstaters may be more decorous than the Administration, but they know the true name of the town: Fuckingham. At the My Garage Museum, the Bauxite Troll finds the name of Park Place in Fuckingham-opoly. Immoral Roberts observes the headless mechanics and reflects on the other people he has de-torsoed.",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 98,
+        "page": 6,
+        "text": "Design a new font that manages to convey emotion with every letter: Tragic Sans.",
+        "value": "8 incredibly depressing points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 99,
+        "page": 6,
+        "text": "BEEFSQUATCH!  THIS IS YOU NOW!  Consensually upstage a friend's in-class presentation while dressed as Beefsquatch.  Who got Beefsquatch'd?  You got Beefsquatch'd!",
+        "value": "11 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 100,
+        "page": 6,
+        "text": "At the Colonial Candy Corner, The Administration all recites the Candy Corner Pledge, but only PreshMo is bestowed the gumball from heaven. Try the fruit slices!",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 101,
+        "page": 6,
+        "text": "Mansueto may be called the ``Reg Egg,'' but despite collective campus will, it just refuses to hatch. Let's liven things up with some real Reg Eggs. At 3:00 p.m.\\ on Friday, begin installing your giant, pulsating egg (that must be fully constructed outside the Reg) on the A-\u00adLevel of our most brutal campus library and finish erecting both your egg and the monster inside by 3:30 p.m. After your monster has incubated for an appropriate period, it's time for it to spring forth from its chitinous prison, leave the Reg, and spread discord and destruction around Bartlett Quad. Once a suitable level of terror has been reached, the creatures gather in front of the Reg to begin a majestic procession through the main Quad. Monsters will be assigned at Morgunver\\dh ur.",
+        "value": "32 points; -20 points if any part of your nesting is still in the A-level past 4:30"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 102,
+        "page": 6,
+        "text": "Video footage of an Escherian stairwell somewhere on campus.",
+        "value": "9 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 103,
+        "page": 6,
+        "text": "In Maxwell Blade's Odditorium in Hot Springs, Popeye reads about Ben Quinn's hand and has a horrible personal realization. PreshMo views the Ventriloquist dummies with suspicion. The Bauxite Troll introduces the merman to the Odditorium's lesser merman. Even Immoral Roberts realizes that elements of this museum are kinda racist, but rejoices at the murder weapons, gleefully pantomiming a possible murder on one of his compatriots.",
+        "value": "6.66 $\\times$ 2 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 104,
+        "page": 6,
+        "text": "The Physics Department's Director of Instructional Labs has opened a food truck and needs a little public relations assistance to develop a customer base. Post an ad in Kersten and other buildings on the Science Quad for Van Bistrow's Van Bistro. Remember: all dishes must feature a side of Ricola.  Bring a copy of your ad to Judgment.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 105,
+        "page": 6,
+        "text": "Immoral Roberts takes note of Chester Community Grade School's character trait of the month so he can disregard it.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 106,
+        "page": 7,
+        "text": "We never learn, do we? Create a perfectly-looped GIF of at least 15 seconds demonstrating conflict, and conflict resolution between three team members in your HQ.",
+        "value": "5 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 107,
+        "page": 7,
+        "text": "Cotton candy coiff-off! Thursday 11:00 a.m.\\ in the Reynolds Club South Lounge.",
+        "value": "2 points for participation; 5, 4, and 3 extra points for 1\\st, 2\\nd, and 3\\rd, respectively"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 108,
+        "page": 7,
+        "text": "Make the most extravagant entrance you can to one (1) event occurring as part of this year's Scav Hunt.  Entrances may employ music, multiple people, bright lights, confetti, bears, singing traffic cones, a break dancing scientist wearing nothing but the Romanian flag and more, but should last no more than one minute.",
+        "value": "8 points; 0 points if you upstage the Scavvencouple"
+    },
+    {
+        "max_val": 10.99,
+        "min_val": 10.99,
+        "number": 109,
+        "page": 7,
+        "text": "At the top of the world's tallest hill, Immoral Roberts tries to thwart Poteau's claim to fame by building a 1 foot rock pile. NOW IT'S A MOUNTAIN. PreshMo helps at first by enacting ``Daddy's Little Princess,'' but realizing Immoral Roberts' scheme, knocks down the pile to preserve the town's pride.",
+        "value": "10.99 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 110,
+        "page": 7,
+        "text": "CRAB FACT: decorator crabs are a group of crab species that use materials from their environments to hide from, or warn off, predators. We always thought that Scavvies were the apex predators, but you never can be too safe. Using scrap and spare supplies, fashion a camouflage suit that will hide a team member from danger. Demonstrate the efficacy of this camouflage.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 111,
+        "page": 7,
+        "text": "The Bauxite Troll finds a house made out of its namesake mineral in Benton, AR. It dreams of one day living in the bauxite house with a bauxite partner, bauxite children, and the merman.",
+        "value": "3 bauxite points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 112,
+        "page": 7,
+        "text": "We want ice cream! We want ice cream! Ice cream for breakfast! Ice cream for breakfast! Make an ice cream that reflects a balanced breakfast as calculated by caloric and nutritional daily needs.",
+        "value": "The reccomended daily allowance is 9 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 113,
+        "page": 7,
+        "text": "At the entrance to the chapel, the  Bauxite Troll admires the handmade iron gates. Immoral Roberts has a(n) (im)moral crisis on the Pathway of Angels.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 114,
+        "page": 7,
+        "text": "A multi-armed hanging mobile displaying three distinct scenes of a classic fairy tale when viewed at different rotations.",
+        "value": "14 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 115,
+        "page": 7,
+        "text": "A classic Berenstain Bears cover recreated with coffee stains.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 116,
+        "page": 7,
+        "text": "To be honest, I'm at a loss for how to react to the emotional rollercoaster that is the Hunt. Help me out with an audience prompt box that will tell how to respond at critical moments.",
+        "value": "13 live points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 117,
+        "page": 7,
+        "text": "A hand-drawn illustration that becomes an undistorted image only when viewed through a crystal ball.",
+        "value": "10 points"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 118,
+        "page": 7,
+        "text": "At the Bauxite Museum in Bauxite, AR, the Bauxite Troll bares its own set of aluminum teeth in front of the bauxite teeth. Popeye gallantly asks out the Bauxite Beauties, but his evil hand just leers. PreshMo contemplates the bauxite dress for a potential first communion outfit, enacting ``Today I Confirm My Faith.'' Outside the museum, Immoral Roberts sullies the wholesome happiness of the bauxite miner family by committing sinful acts in front of them.",
+        "value": "13 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 119,
+        "page": 7,
+        "text": "Do your plank hang low? / Cuz it's time for woodshop, yo! / Can you tie a sweet-ass knot? / Can you tie a sweet-ass bow? (No points for sweet ass-bows.)",
+        "value": "9 points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 120,
+        "page": 7,
+        "text": "What's the most expensive building in Tiny Town, and how much did it cost?",
+        "value": "2 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 121,
+        "page": 7,
+        "text": "Valentine's Day didn't go so hot for us year, and we demand reparations! When our locker is opened at Judgment, we want a veritable torrent of valentines---a seemingly-physics-defying flood of valentines---that would make the Looney Tunes\\tm\\ proud.",
+        "value": "February 14\\th\\ points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 122,
+        "page": 8,
+        "text": "\\emph{Get Rich or Die Trying Girl} was a lovely testament to the power of compromise. Have your most musical theater-inclined Scavvies assemble on Friday at 2:00 p.m. at Ida Noyes' Third Floor Theater for a Sing-off. Songs must be originally composed, complete with costumes, and should marry two musicals together into one seamless sung mashup.",
+        "value": "12 points for participation; 12, 8, and 6 points for 1\\st, 2\\nd, and 3\\rd, respectively"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 123,
+        "page": 8,
+        "text": "At the King Kong at Kong's Cafe, Dread Pirate Popeye ground pounds the ground with his haunted hand.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 124,
+        "page": 8,
+        "text": "Send your synchronized ``swim'' team to the Midway at 10:30 a.m.\\ on Saturday for your synchronized swimming routine without the pool.",
+        "value": "11 points"
+    },
+    {
+        "max_val": 7.5,
+        "min_val": 7.5,
+        "number": 125,
+        "page": 8,
+        "text": "TABLESCAPES. Come prepared at 4:30 p.m.\\ to the Ida Noyes Cox Lounge on Saturday for the first annual Scav tablescapes competition. Try to best Gene Belcher!",
+        "value": "7.5 points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 126,
+        "page": 8,
+        "text": "VENTRILOQUIST DUMMY''S Or are they Dummy's? Many people are afraid of these delightful creatures, even though they are helpless without the hands of the artist ``The Ventriloquist.\" This artform spans many centuries and when they are done properly these little guys come to life. It has been said that perhaps its not you who control the dolls BUT PERHAPS THEY CONTROL YOU!!! ARE THEY WATCHING YOU NOW? LOOK CLOSER!",
+        "value": "1 point"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 127,
+        "page": 8,
+        "text": "As the Administration cruises down 2\\nd\\ Street in Little Rock, PreshMo holds up a favorite book to add to the mosaics. Of course, it is upside-down.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 128,
+        "page": 8,
+        "text": "Send one (1) team member to Judgment who can beatbox the sound of the normal human heart. Then, beatbox a crescendo-decrescendo arrhythmia, a pediatric atrial flutter, a midsystolic click, and Dick Cheney's heart.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 129,
+        "page": 8,
+        "text": "The Dread Pirate Popeye tries to chat up the telephone lady at Bob's, entranced by her equally problematic hand situation. Having learned to accept himself for who he and his hand are, he gets her number so he can call her anytime.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 130,
+        "page": 8,
+        "text": "Level 257 in the Woodfield Mall \\emph{claims} to be a Pac-Man-themed Restaurant. But while this restaurant purports to have ``Pac-Man themed food items'' it does not fulfill any fan's true fantasy: the ability to eat spherical food, lying down, while constantly moving forward and having said food enter one's mouth. Create an apparatus that will allow a team member to enjoy this heavenly lazy experience. Extra points if Pac-Man is being pursued by ghosts.",
+        "value": "10 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 131,
+        "page": 8,
+        "text": "At the Giant Praying Hands in Tulsa, the Bauxite Troll laments that the hands are not made out of Bauxite. Immoral Roberts subverts the praying hands and instead performs praying feet.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 132,
+        "page": 8,
+        "text": "The death of Hot Doug's has us jonesing for some intriguing sausage. Get your mind out of the gutter! All we're saying is, so many cities, states, and countries have an encased meat that's just the pride of their geographical region! Show that their mayors, governors, and/or presidents agree by making their faces out of sausages common to their regions.",
+        "value": "2.5 points per recognizable face, maximum 5 faces"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 133,
+        "page": 8,
+        "text": "YKARNOTIJPVURNOMSOYKA HMOBILFSBICTGJTMAF CRPDLH BPTCIDMSYGYY\\\\MHTFNTPNSJAXFAYTYS LIMMARMAOBELGYN CWBANFVLRPOAVLRSCLAEP ZAZAMSCIAZRHCHRZAZ TUNCMNNIMLFWCKY LOSTIP QRWMRANDJBEN MCTCAIBGFNBOJIBKRT PNRWVBFRW ZNZBTQNLAZZUNLABUQVBEW BNDASBDYUKBLXBJKHI HYDISBSLVAMDHYD KTMDELIDRNAGMAAGOI KMGDMUMDLHANMDLMNUSYX.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 134,
+        "page": 8,
+        "text": "Who the \\textit{fuck} is Will Rogers? The Administration gives us nine distinct answers. You know the ones we want.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 135,
+        "page": 8,
+        "text": "When football players get done with the game, they grow into sportscasters. What happens to showdogs? Present your video of your former showdog (or impressively showdog-esque shelter mutt) sportscasting the Westminster Kennel Club Dog Show, complete with human hands to add circles and arrows to the screen!",
+        "value": "12 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 136,
+        "page": 8,
+        "text": "A set of emoji expressing the entirety of a Shakespeare soliliquy. We should be able to recognize the soliliquy without guidance.",
+        "value": "To three or not to three points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 137,
+        "page": 9,
+        "text": "Is that a cod in your pants, or are you just happy to see me?  Oh, it's a cod-shaped cod-piece!",
+        "value": "1 point"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 138,
+        "page": 9,
+        "text": "Forge some fordite.  Should look completely realistic, except significantly more orange than the real dealios.",
+        "value": "8 points"
+    },
+    {
+        "max_val": 26,
+        "min_val": 26,
+        "number": 139,
+        "page": 9,
+        "text": "We like Jell-O\\tm, and we like stained glass windows, but we \\emph{hate} having to choose.  Fashion a stained Jell-O\\tm\\ work in the style of Giuseppe Arcimboldo that not only looks like a person made of fruit but also tastes like the fruit it depicts.",
+        "value": "26 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 140,
+        "page": 9,
+        "text": "A higher-order rainbow.  No, higher!",
+        "value": "7 points for greater than 10 orders; 15 points for more than 20; 25 points for more than 50"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 141,
+        "page": 9,
+        "text": "We were shocked and apalled by how much blood was coming out of Brock Lesnar during his title match at WrestleMania\\tr\\ 31. Doesn't he know that he's wasting perfectly good blood that he could donate to the DCAM? For points!? \\emph{For Blood Drive!?!?}",
+        "value": "$\\Lambda$ points"
+    },
+    {
+        "max_val": 15,
+        "min_val": 15,
+        "number": 142,
+        "page": 9,
+        "text": "Solve the most Rubik's Cubes\\tr\\ the most fast for the most gold (read: points). The catch: Cubes must be solved concurrently, with each cube getting only one move at a time.",
+        "value": "15 points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 143,
+        "page": 9,
+        "text": "What time is it always at Bob's Gasoline Alley? What are you when at driving?",
+        "value": "2 points"
+    },
+    {
+        "max_val": 16,
+        "min_val": 16,
+        "number": 144,
+        "page": 9,
+        "text": "\\emph{Pat the Bunny}?  More like \\emph{Dissect the Bunny}.  A cute, but still educational, rendition of the anatomical flap books of old featuring everyone's favorite formalin-soaked friends, whether they be frog, feline, fetal, or other.",
+        "value": "16 points"
+    },
+    {
+        "max_val": 17,
+        "min_val": 17,
+        "number": 145,
+        "page": 9,
+        "text": "A double-necked ramkie.",
+        "value": "17 points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 146,
+        "page": 9,
+        "text": "We thought for sure that the ice cream sundae flavor was the very pinnacle of poptarts.  That is, until this new line of cocktail poptarts!  Provide a sample of your favorite layered drink turned toaster pastry.",
+        "value": "10 points"
+    },
+    {
+        "max_val": 20,
+        "min_val": 20,
+        "number": 147,
+        "page": 9,
+        "text": "Times are hard, but children are still bored.  The Phantom Tollbooth Inc. is looking to cut back on costs.  Construct a child-sized tollbooth with working arm, sliding window, and coin collection bin that can comfortably fit in one of FedEx's flat rate boxes but is quickly and easily assembled on the other end.",
+        "value": "20 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 148,
+        "page": 9,
+        "text": "Ugh, your face, we hate it!  Change it and make it quick!  Sure, maybe only the Xi Chuan opera knows the true secret, but I'm sure you can come up with something.  Come prepared to change your face at least three times at Judgment.",
+        "value": "9 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 149,
+        "page": 9,
+        "text": "What time is it?  Krunch Time!  Get your brain blast on and recreate the candy that took Retroville by storm.  Should feature different layers of sour, chewy, sweet, etc. and be addictively delicious to boot.",
+        "value": ".5 points per layer up to 5 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 150,
+        "page": 9,
+        "text": "We have plenty of sonatas and interludes for the prepared piano, but really not enough orchestral pieces.  Why should the piano get all the love?  Prepare three other instruments in a similarly harmless way and present a sampling of how they sound.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 151,
+        "page": 9,
+        "text": "There are many important elements to Scav, but one conquers all: the ability to drop it like it's hot.  Bring a sample of what we really mean to Judgment. Visit the website for an explanation.",
+        "value": "12 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 152,
+        "page": 9,
+        "text": "\\emph{Oh the Places You'll Go: For Photons}!  The illustrated telling of a photon's exciting life journey from its start in, for example, the solar core, through its wave-particle existential crisis---and more---before finally finishing with an appropriately happy ending.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 153,
+        "page": 9,
+        "text": "You may be a part of the so-called ``Everyone Gets a Trophy'' generation, but you knew all along those 5-year old soccer gimmes were really just setting you up to win the main game.  Bring as many youth sports trophies as you can muster to Judgment.  Medals and plaques mean squat.",
+        "value": "0.1 points per trophy up to 150 trophies"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 154,
+        "page": 10,
+        "text": "If we're the ``Everyone Gets a Trophy'' generation, why didn't I get a trophy just for being born after 1985? Make us a statuette that is instantly recognizable as Millennial.",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 155,
+        "page": 10,
+        "text": "A vibratorphone! No, not a vibraphone. Or a phone vibrator. Perform eight bars of recognizable music using only the tones emitted by ``personal massagers.'' Multiple musicians and/or instruments are allowed. [",
+        "value": "8) points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 156,
+        "page": 10,
+        "text": "Something special only two bros can hug: Ancient Psychic Tandem War Stuffed Elephant!",
+        "value": "10 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 157,
+        "page": 10,
+        "text": "How did ``Jackson Park Express'' not get a music video!?",
+        "value": "6 bus points"
+    },
+    {
+        "max_val": 75,
+        "min_val": 75,
+        "number": 158,
+        "page": 10,
+        "text": "Play us a symphony of syllogisms with your logic piano. Your design need only support three terms and can incorporate simple electronic components, but it must still operate according to the principles laid out in ``On the Mechanical Performance of Logical Inference.''",
+        "value": "75 points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 159,
+        "page": 10,
+        "text": "A budget spreadsheet for mAB, the shadowy RSO in charge of planning all of the \\UofC 's minor activities.",
+        "value": "1 point"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 160,
+        "page": 10,
+        "text": "Now that we have computers you can control just by waving your hands around, what about a simple motion-control interface using only pelvic thrusts?",
+        "value": "6 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 161,
+        "page": 10,
+        "text": "Find a deserving target and treat them to a \\emph{Se7en}-style surprise---the Seven Heavenly Virtues, that is. Decorate their room with a tableau reflecting the virtue they exemplify.",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 162,
+        "page": 10,
+        "text": "Get Blazed by the Average Homeboy.",
+        "value": "1 point for online; 5 points for in person."
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 163,
+        "page": 10,
+        "text": "Clowns emerging from a four-door sedan. No videos. Clowns must look the part.",
+        "value": "5 points for six clowns; 1 point for every clown above that"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 164,
+        "page": 10,
+        "text": "Gas Powered Stick! Ooh! Never runs out of gas! But wait, how does it work? We are going to need some annotated blueprints detailing the locations and workings of its internal combustion engine, the mechanism that transforms it into a tree bearing a perfect, jive-ass peach, and whatever else you manage to cram in there.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 165,
+        "page": 10,
+        "text": "Even with its ubiquity, its blood-red color scheme, and its stylized omega logo, Lululemon just isn't going to be an effective harbinger of the Antichrist without a more appropriate word cloud on its bags.",
+        "value": "2 $\\times$ 3.33 points"
+    },
+    {
+        "max_val": 7.5,
+        "min_val": 7.5,
+        "number": 166,
+        "page": 10,
+        "text": "Perhaps some sort of death clock? A wall clock illustrated to depict the arena for the 75\\th\\ Hunger Games.",
+        "value": "7.5 points"
+    },
+    {
+        "max_val": 18,
+        "min_val": 18,
+        "number": 167,
+        "page": 10,
+        "text": "A lovingly hand-crocheted human cozy, which snugly fits a team member from head to toe.",
+        "value": "18 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 168,
+        "page": 10,
+        "text": "Scav's anaconda don't want none unless you got papier-m\\^{a}ch\\'{e} buns, hun.",
+        "value": "2 points for a turntable topper; 10 points for a rump sturdy enough to stand atop whilst declaring your love of big butts"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 169,
+        "page": 10,
+        "text": "`90s Nickelodeon has taught us that there is only one way to honor the victors of athletic competitions: slime. Bring at least a gallon of non-toxic slime and a pair of goggles to Scav Olympics. Event winners, should they desire, will bathe in the green gloop of glory.",
+        "value": "9.0's points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 170,
+        "page": 10,
+        "text": "Pineapple Inside Out-Cake! An intact-ish pineapple, with cake baked on the inside!",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 171,
+        "page": 10,
+        "text": "We can't publish the List before it undergoes peer review! Get us verified feedback from as many members of the British Peerage as you can.",
+        "value": "15 points for one; 5 points for every additional peer up to a total of 4"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 172,
+        "page": 10,
+        "text": "I won't have to touch your Death Note to see the Shinigami balloon sculpture following you around Judgment.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 173,
+        "page": 10,
+        "text": "I'm not a perfect person.  I never meant to do this thing to you. But I have to say before I go. Time for a Hooburrito. Everyone knows that cool kids, in addition to having goatees, always order off-menu. Try the Denny's on Harlem and be sure to leave a big, frosted tip.",
+        "value": "I found a reason to give you 5 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 174,
+        "page": 10,
+        "text": "A Warp Star, Golden Banana, or Jiggy that, when held aloft, plays its signature tune.",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 175,
+        "page": 11,
+        "text": "Junior Park Rangers, unite! We know that you got your badge when you went to National Parks, and now it's time to fulfill your duties! Find and capture these invasive species in the Chicago area: Emerald Ash Borer, Gypsy Moth, and an Asian Longhorned Beetle.",
+        "value": "3 points for a dead specimen; 7 points for a live one"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 176,
+        "page": 11,
+        "text": "",
+        "value": "10 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 177,
+        "page": 11,
+        "text": "The nihilism in the pop songs at these frat parties is getting to us, and we think we'd better just go back to the Bacchic cult model. Initiate a Judge into your very own Bacchic mystery cult with historically accurate initiation rites, which of course must be conducted in Ancient Greek. Sign up for a time on our website.",
+        "value": "12 points"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 178,
+        "page": 11,
+        "text": "Remember those American Girl\\tr\\ Minis? Too nervous to talk in class? Well, we have a solution. Make a replica of your therapist's office in your desk drawer so that you can occasionally look back on it as you are studying and get over your residual anxiety.",
+        "value": "14 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 179,
+        "page": 11,
+        "text": "\\textgreater {\\begin{flushright}",
+        "value": "5 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 180,
+        "page": 11,
+        "text": "Make me a beautiful plaque decorated with Vulcan calligraphy dedicating the Scavvenwedding to your favorite 'ship in the universe.",
+        "value": "9 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 181,
+        "page": 11,
+        "text": "What the hell is ``Grade A Dark Color, Strong Taste?'' Concoct us some, ``Grade A Bistre, Overpowering Taste'' maple syrup.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 182,
+        "page": 11,
+        "text": "Infiltrate the secret network that is the clockmaking community! Present a fully functioning, mechanical double pendulum resonance clock at Judgment. No batteries or electrical parts allowed!",
+        "value": "10 points for a photo; 30 if at Judgment"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 183,
+        "page": 11,
+        "text": "Dragon Tales Scale! No, not the kind that takes me to Dragon Land! The kind that lets me know if I'm eating too many dragonberries and am approaching Zak and Wheezie-weight or if I'm sitting pretty at Cassie-weight!",
+        "value": "7 points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 184,
+        "page": 11,
+        "text": "TBA",
+        "value": "1 point"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 185,
+        "page": 11,
+        "text": "Herm of a Dean!",
+        "value": "25 points; 20 extra points if made from a wax casting of the original and the evidence to prove it"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 186,
+        "page": 11,
+        "text": "VIP YOTDIF PHS BWU OK J ETOYRX, JCP ZIPDOK W CIZULE AOXL ZIC KIMH: YCOCSTOC PSAMEUPIIN, FZBEOTA XEPTSJNEV, FOKS BHI ARE LSNP REDIMD. ONSTSBH XEJKS BOUW VRYM, IF JOCZ CLWV, RIUA UCXP, WOUB PEYF. WSET IK PHE CIFTLSTOOF IM TDIS GCEEP ASKZOKS EMUBYPTSD, MAPHENBTICJXLZ JSXEMRNP, WVH UFESEK.",
+        "value": "11.2358 plus 5 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 187,
+        "page": 11,
+        "text": "A snail shell that's been reconstructed to look like a miniature house.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 188,
+        "page": 11,
+        "text": "Need a quick pitch? In the Loop and around a lot of cars? No, we don't mean a sales pitch. A note. Create the chorus of this year's Theme Song using only car horn notes recorded in the Loop.",
+        "value": "11 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 189,
+        "page": 11,
+        "text": "Yeah, yeah we've all heard about there being so much whimsy on this campus, but what about whimsy \\emph{pieces}? Make a wooden jigsaw puzzle with whimsy pieces shaped like your very own Showcase items that assembles itself into a picture of your own Scavvy choosing.",
+        "value": "17 points for a puzzle of more than 50 pieces"
+    },
+    {
+        "max_val": 200,
+        "min_val": 200,
+        "number": 190,
+        "page": 12,
+        "text": "A University of Chicago-themed one-armed bandit. That's right: an RSO funding slot machine for those of us annually cowering before the CLI. Must be mechanical (not video) and have at least three reels producing differentiated outcomes. Must be homemade and may not actually accept or dispense legal tender. Must have a dizzying amount of lights and sounds.",
+        "value": "200 points"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 191,
+        "page": 12,
+        "text": "A miniature bust in the style of Li Hongbo, crafted out of Post-It\\tr\\ Pop-Up Notes or similar.",
+        "value": "13 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 192,
+        "page": 12,
+        "text": "Upon arriving at the Precious Moments Chapel Gift Shop, PreshMo realizes that they are not alone. They are but one of thousands. They are legion. In front of the Chapel, PreshMo has a road to Damascus moment and recognizes that Sam Butcher has been molding, sculpting their life, and that he is their lord and creator. Finally at peace, PreshMo takes a nap.",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 193,
+        "page": 12,
+        "text": "In the room the women come and go, talking of Michelangelo. And Raphael. And Leonardo, and Donatello. Present an illustrated comic of the ``Love Song of J. Alfred Prufrock,'' eight pages max, as enacted by the TMNT at Judgment.",
+        "value": "I have measured out my life in 9 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 194,
+        "page": 12,
+        "text": "Dank. Sopping. Moist. Soggy. Dripping. Oozy. The Hooburrito may be Hoo, but the wet burrito is wet. At the home of the wet burrito in Tulsa, the Administration dubiously chows down on the dampest burrito around.",
+        "value": "8 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 195,
+        "page": 12,
+        "text": "The World's Largest Totem Pole prompts PreshMo to enact ``I'm Behind You All The Way.\" Even the Haunted Hand realizes the cultural appropriation of the totem pole, but the Dread Pirate Popeye introduces the merman to the turtle nonetheless.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 20.01,
+        "min_val": 20.01,
+        "number": 196,
+        "page": 12,
+        "text": "An official cheese board from The National September 11 Memorial Museum.",
+        "value": "20.01 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 197,
+        "page": 12,
+        "text": "Struck with ecstasy at being in Foyil, the Bauxite Troll runs around in happy circles at the statue of Andy Payne.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 198,
+        "page": 12,
+        "text": "Write a wish for your team and seal it inside a homemade temari ball, at least 2'' diameter.",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 199,
+        "page": 12,
+        "text": "The Uncanny Valley of the Dolls: At Morgunver\\dh ur, you will adopt one of the cheapest, ugliest baby dolls we can find. By Judgment, give your baby a full Reborn Doll makeover. The plastic head and limbs must remain intact, but changes to the paint, hair, torso, and clothes are all legit for metamorphosis.",
+        "value": "12 points; plus 4 points for ``best.'' Even the cutest reborn dolls are creepy as fuck, so consider ``best'' to mean ``most lifelike.''"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 200,
+        "page": 12,
+        "text": "LESSHENGE!!!! It's like STONEHENGE, but made out of LESS!!!! \\emph{Don't you understand!?!?!?!?!?} In Rollo, Immoral Roberts tries to step on the analemma but is stopped by strongman Dread Pirate Popeye.",
+        "value": "8 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 201,
+        "page": 12,
+        "text": "At Ariston's, Immoral Roberts orders a tea and realizes that this makes him \\textit{Immortal} Roberts. He cackles evilly while committing cybercrimes on his smartphone. The rest of the Administration orders dessert.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 202,
+        "page": 12,
+        "text": "This year for Dinner we're focusing on the theme of ``efficiency!'' What this means is that your appetizer might be awful, or should we say \\emph{offal!} It might also be brainy, by which we mean \\emph{brain}-y! Make no \\emph{bones} about it, you should bring us an appetizer using parts from two different biological systems---that \\emph{aren't} the muscular, natch. For the main dish, we want to efficiently eat many good things at once, and as teen heartthrob Tony Shalhoub told us in the movie \\emph{Big Night} a Timpano ``has a special crust, is shaped like a drum, and inside are all the most important things in the world.'' Sounds good to us! Make one with ingredient layers strictly from a non-European cuisine. Finally, Scav's going green with a dessert that will integrate our sweets with our Mom-mandated healthy greens. Your dessert may also use ingredients that are not green vegetables, but the veggies should be the star. The feast kicks off at 6:00 p.m.\\ on Saturday in the McCormick-Tribune Lounge.",
+        "value": "$\\Gamma$ points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 203,
+        "page": 12,
+        "text": "At Judgment, model an outfit that makes a member of your team appear to be cel-shaded from head to toe.",
+        "value": "11 points"
+    },
+    {
+        "max_val": 28,
+        "min_val": 28,
+        "number": 204,
+        "page": 13,
+        "text": "Build Plato's Alarm Clock: now with snooze button!",
+        "value": "28 points"
+    },
+    {
+        "max_val": 23,
+        "min_val": 23,
+        "number": 205,
+        "page": 13,
+        "text": "What's that you say, Big Mouth Billy Bass? The road trip has reached the border? Your Captain needs 42 Masters Tournament golf balls immediately? You want to put your what where!? Big Mouth Billy Bass has delivered his most important message and is ready for some more complicated fare. Rewire Billy to read aloud your team's most important text communications and mount him in your headquarters to communicate the news. It truly is all about the Big Mouth Billy Bass.",
+        "value": "23 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 206,
+        "page": 13,
+        "text": "Show me Four Blue Cards.",
+        "value": "5 blue points"
+    },
+    {
+        "max_val": 55,
+        "min_val": 55,
+        "number": 207,
+        "page": 13,
+        "text": "Install your Aeolian harp on the Midway by Friday at noon.",
+        "value": "55 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 208,
+        "page": 13,
+        "text": "After waking up in Claremore, the Bauxite Troll journeys to the Will Rogers Memorial in search of sage parenting advice. It interrogates the silent metal statue, and realizes it has had its baby with it all along. It puts a box on the merman and calls it a day.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 209,
+        "page": 13,
+        "text": "Your choice of dinosaur in the style of Guido Daniele.",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 210,
+        "page": 13,
+        "text": "Sick of your colleagues snickering when you slip a tampon up the sleeve of your dress shirt to walk to the bathroom? End them by creating a Spider-Man-style web shooter---for tampons! Should shoot multiple tampons that explode in red glitter upon impact.",
+        "value": "12 points, period!"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 211,
+        "page": 13,
+        "text": "Get 97.1 FM WDRV The Drive: Chicago's Home of Classic Rock to dedicate a song to the happy Scavvencouple.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 212,
+        "page": 13,
+        "text": "Dread Pirate Popeye struggles to hold his evil hand over his heart as he recites the Pledge of Allegiance at the Mount Vernon Washington Monument.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 18,
+        "min_val": 18,
+        "number": 213,
+        "page": 13,
+        "text": "A hoop skirt that makes Heffernen's Booty come to life.",
+        "value": "18 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 214,
+        "page": 13,
+        "text": "Portraits of at least two of your team's Captains using only pancake batter.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 215,
+        "page": 13,
+        "text": "Oh, that's just German for ``Tree Bart, Tree.'' Leave the note, but use a pen, Scavvies! The Administration carries out Sideshow Bob's bidding at the Bart Simpson Tree outside Vinita.",
+        "value": "8 points"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 216,
+        "page": 13,
+        "text": "That Leonard Volk cast of Abraham Lincoln's hands, but made out of chocolate.",
+        "value": "13 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 217,
+        "page": 13,
+        "text": "Fear rejection? Try retribution! Build an engagement ring box that can be triggered to respond with an unpleasant surprise if they turn you down. Mechanism need not be fully inside the box and harm should be limited to hearts, dreams, and dignity.",
+        "value": "9 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 218,
+        "page": 13,
+        "text": "A pen that shoots out a tiny white flag.",
+        "value": "4 feeling Blue Book points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 219,
+        "page": 13,
+        "text": "Well, shit! Suddenly you're in the past (but still stuck in a UChicago class---just your luck). You sense, somehow, that the sun is setting over Denmark, where a teeny prince has just come into the world. \u201cIt's Bird Day, baby,\u201d some guy hisses from the fireplace, lasciviously biting a lollipop. Uncomfortable, you look to the ceiling, surprised to find a mermaid and a lamb watching over you. Where was the professor born?",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 220,
+        "page": 13,
+        "text": "Your long exposure/light photograph haiku should/be better than this.",
+        "value": "5---no just kidding, actually 7 points; not really 5 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 221,
+        "page": 13,
+        "text": "At the world's largest rocking chair, the Bauxite Troll perks up at the word ``rock'' and leads the Administration in a rocking dance party.",
+        "value": "4 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 222,
+        "page": 13,
+        "text": "Get my feet wet? I'd prefer not. Let me walk across a puddle of oobleck instead!",
+        "value": "10 points if our inner non-Newtonian children squeal with glee"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 223,
+        "page": 13,
+        "text": "What's black and white and red all over? The May issue of \\emph{Menstruation Monthly}, of course! No common rag, your periodical should cover all the latest in menstrual news for your team and beyond.",
+        "value": "7 points."
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 224,
+        "page": 14,
+        "text": "Three chapters from an introductory language textbook following the story of a group of college students who are slowly realizing that they are forever trapped in a language textbook.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 225,
+        "page": 14,
+        "text": "Tengen Toppa Gurren Lagann matryoshka dolls.",
+        "value": "3 points inside 5 points inside 7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 226,
+        "page": 14,
+        "text": "Yeah, we know you can tell an American porter from an English porter, but can you taste the subtle, sophisticated differences between 8 of the cheapest, shittiest American beers? Report to the Pub at 4:00 p.m.\\ on Friday to test your skills.",
+        "value": "1 point for participation; 12, 8, and 4 points for 1\\st, 2\\nd, and 3\\rd, respectively"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 227,
+        "page": 14,
+        "text": "Are you still upset that you didn't get a chance to truly enjoy the desert scenery from last year's bus ride? Well, we've got quite the deal for you. You play 2014 holes of Desert Golfing, then let us shoot the 2015\\th\\ one.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 228,
+        "page": 14,
+        "text": "Between dealing with the family and figuring out if we even have enough credits to graduate, we don't have time put on a graduation robe! We're so thankful that your team made this giant Polly Pocket\\tm\\ Magic Fashion Closet dressing machine to help us out. Machine should function through the closing and opening of the door.",
+        "value": "20 poll-la-la-la-points; 0 points for people crammed in your closet waiting to put clothes on us"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 229,
+        "page": 14,
+        "text": "Just because you're in the basement working with mice all day doesn't mean you can't look fabulous doing it. We'll give you one complete Biosafety Level 2 getup, and you show us your latest design in personal protective equipment fashion, altering the materials but adding nothing but thread and innovation. PPE-rfect!",
+        "value": "13 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 230,
+        "page": 14,
+        "text": "Scientists think they're so great with their fancy words like ``dysarthria'' and ``myeloproliferative,'' but they can't even spell ``conclusions.'' Provide photographic evidence of as many spelling errors as you can find on scientific posters in \\UofC\\ medical and science buildings.",
+        "value": "1 point per poster, maximum 10"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 231,
+        "page": 14,
+        "text": "ITAWITWDAMINTILTYAIFANYIMWITMSFAWPADFAKIWLFTBNYIMWYSWHRJSWSHNWW\\\\BWYTYGBHIJMYATICBHMNS\\_ \\_ \\_.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 22,
+        "min_val": 22,
+        "number": 232,
+        "page": 14,
+        "text": "When we asked for chicks, we weren't talking about these indecently dressed young floozies. Create a cuteoscope---a mutoscope that depicts frolicking baby birds, tumbling kittens, or another adorable animated scene of your choice. Cuteoscopes should be entirely mechanical, not necessarily coin-operated, and decorated with an appropriately suggestive title plaque.",
+        "value": "22 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 233,
+        "page": 14,
+        "text": "At 8 a.m.\\ on Thursday, see how they flutter! The Surreys with their fringes on top come rumbling down 57\\th\\ Street. And out piles the Clinton Administration! First aboard is Immoral Roberts in his slick televangelist suit with his upside down cross pin shining on his lapel. Second is The Precious Moment, wings and halo cutely inspiring the masses, hair perfectly coiffed, thumb permanently in mouth, silent. Third, the Dread Pirate Popeye with his haunted hand. Bringing up the rear is the Bauxite Troll, equal parts box, troll, bauxite, and Boxtroll. Oh, and their pet merman.",
+        "value": "$\\Xi$ points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 234,
+        "page": 14,
+        "text": "It's hard to motivate Scavvies in the last few hours before Judgment. Luckily, you've implemented a ``Written? Kitten!''-esque website for your team to follow their progress: ``Complete? Parakeet!''",
+        "value": "4 parapoints"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 235,
+        "page": 14,
+        "text": "I hate to see you go, but I love to watch you leave. But how will I know which way you're going? Make me a pair of turn signal pants to help me figure it out. Your pants should alert me to when you are stopping, as well as any intended change in direction.",
+        "value": "14 points"
+    },
+    {
+        "max_val": 8.0085,
+        "min_val": 8.0085,
+        "number": 236,
+        "page": 14,
+        "text": "We like the experts at VS well enough, but we'd feel better having someone, or something, we're a little bit more comfortable with to help us figure out our bra size. Make a shirt that will independently and automatically determine bra size when worn.",
+        "value": "8.0085 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 237,
+        "page": 14,
+        "text": "NANORASPUTI(A)N. Don\u2019t forget to show your synthesis steps!",
+        "value": "9 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 238,
+        "page": 14,
+        "text": "My antidrug is\\textellipsis pens with names of drugs on them! More, MORE!",
+        "value": "0.05 points per unique pen; limit of 300 pens"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 239,
+        "page": 15,
+        "text": "I like egg drops, but I prefer them \\emph{after} chemical change. And is there any greater culinary moment of suspense than when custard falls from frustum to plate? With that in mind, your chefs gather on the Logan Center 3\\rd\\ Floor Walkway at 11:00 a.m.\\ on Friday for the University of Chicago's First Annual Flan Drop competition. Each team will bring their containered cr\\'{e}me caramel to be flipped over to the waiting plates on the tarps below. Each flan will be judged on size, structural stability, taste, and, of course, accuracy in the subsequent caramel drizzle, which, incidentally, will also be delivered from the walkway. Sweet victory awaits!",
+        "value": "14 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 240,
+        "page": 15,
+        "text": "Dread Pirate Popeye shakes his evil fist at the sky mourning the Boy Martyr of the Confederacy at the memorial in Little Rock. Immoral Roberts grins.",
+        "value": "4 points"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 241,
+        "page": 15,
+        "text": "With Scav going on, you forgot to finish an item. You're really screwed if the Judge calls on you. Good thing you showed up with your Rochester Cloak set-up. That should hide your smallest item at least a little.",
+        "value": "14 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 242,
+        "page": 15,
+        "text": "At the tiny jail, Immoral Roberts pines for his own days in the clink. In the park near the jail in Loda, the Administration eschews the No Spin Zone and takes a ride on the merry-go-round.",
+        "value": "5 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 243,
+        "page": 15,
+        "text": "Are you tough enough for the GRX!? This ain't no baby's GRE! 35 minutes per section!? Try 10! Want a new section!? Take a lap! Desks and chairs!? Fuck no! Loud music and dodgeballs!? Fuck yes! Be at the main Quad at 12:00 p.m.\\ on Thursday or be prepared to join the workforce.",
+        "value": "6 points for participation; 5, 4, and 3 points for 1\\st, 2\\nd, and 3\\rd, respectively"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 244,
+        "page": 15,
+        "text": "Get a golden retriever to retrieve us some gold. Krugerrands would be nice, but we'd be okay with bars too.",
+        "value": "4 points"
+    },
+    {
+        "max_val": 33,
+        "min_val": 33,
+        "number": 245,
+        "page": 15,
+        "text": "Let me see you just bobble baby, bobble baby, bobble baby, bobble.  Or actually, your huge bobblehead creature should do that.  Your creature can be real or mythical, but let's just say go big or go home.",
+        "value": "33 points"
+    },
+    {
+        "max_val": 15,
+        "min_val": 15,
+        "number": 246,
+        "page": 15,
+        "text": "At Tiny Town, Dread Pirate Popeye points to a disembodied hand that reminds him of his own affliction. Immoral Roberts cackles at the carnage of the gunfight. PreshMo expresses childlike glee, pressing the button to make the train go round, and round, and round, and round, and round. The Bauxite Troll finds out from Charlie what the trees are made of, and reacts appropriately.",
+        "value": "15 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 247,
+        "page": 15,
+        "text": "Go clubbing. Get the DJ to play the Theme Song. Announce to all present that ``THIS IS MY JAM!\" At which point, distribute jars of delicious homemade preserves.",
+        "value": "7 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 248,
+        "page": 15,
+        "text": "A Jar-Jar lollipop. You know the one we want.",
+        "value": "XV points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 249,
+        "page": 15,
+        "text": "Lights, Camera, ARKANSAS!! The Administration jazz hands it up in front of the sign.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 250,
+        "page": 15,
+        "text": "How can you hope to break the internet if you can't even break that bottle? At Judgment, christen one of your Showcase items by smashing a full, sealed bottle of champagne across its stern. You have one try, and the item will then be judged in its christened state.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 11,
+        "min_val": 11,
+        "number": 251,
+        "page": 15,
+        "text": "An adorable animal wearing adorable slippers in the shape of said adorable animal.",
+        "value": "11 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 252,
+        "page": 15,
+        "text": "It's the first annual Miss Joe Regenstein pageant! At Morgunver\\dh ur, each team will be assigned a Reg section to represent in the competition. At 8:00 p.m.\\ on Thursday in Hutchinson Commons, Miss Classics Reading Room, Miss TECHB@R, and others will compete in three categories to win the crown: Interview, Talent, and Miss Universe-style Regional Costume. Note that your Talent must be related to library science, Brutalist architecture, noise reduction, or study skills. Misses of all gender identities are welcome.",
+        "value": "25 scholarship-points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 253,
+        "page": 15,
+        "text": "Around the corner from Abbey Road, Dread Pirate Popeye would like the yellow submarine: it's a watercraft! He poses for a pic with the vessel.",
+        "value": "2 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 254,
+        "page": 15,
+        "text": "Documentation of a teammate sadly afflicted with Munch-a-House Syndrome and Munch-a-House Syndrome by Proxy.",
+        "value": "1 point each"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 255,
+        "page": 15,
+        "text": "At the Fuckingham Cross, Immoral Roberts flees in terror. PreshMo listens to a stirring lecture about a commandment, and enacts ``The Greatest of These is Love.'' Dread Pirate Popeye restrains his evil hand in prayer. The Bauxite Troll embraces the cross as its metal brother.",
+        "value": "10 Commandment points"
+    },
+    {
+        "max_val": 20,
+        "min_val": 20,
+        "number": 256,
+        "page": 16,
+        "text": "On THURSDAY at 5:00 p.m., come to HUTCH COURTYARD for BIBLEMANIA \\UofC\\ I! Make sure your pro wrestlers act out a specific inter-personal conflict from either the Old or New Testament when they step into the ring. Five minutes per match and one match per team. Your victor must walk out with a championship belt.",
+        "value": "20 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 257,
+        "page": 16,
+        "text": "A Scav List completion in four days is pretty tough, but a Pok\\'{e}mon list completion shouldn't be thaaat bad. Pok\\'{e}mon must be presented in ascending number with their original names.",
+        "value": "5 points per different cartridged game, maximum 3 games; 20 points for the Original 150 using only Base 1, Base 2, Fossil, and Jungle cards"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 258,
+        "page": 16,
+        "text": "A mixtape cassette of all of your team's music-related item completions, which includes recorded demos of any musical performances done during the Hunt. We won't feel loved if it doesn't come with some original artwork, poems, and drawings meant to woo as all mixtapes should.",
+        "value": "12 points"
+    },
+    {
+        "max_val": 16,
+        "min_val": 16,
+        "number": 259,
+        "page": 16,
+        "text": "A team member's exact facial likeness embedded in carbonite as a trophy for Judga the Hutt's throne room. They should be quite well protected, if they survive the freezing process, that is.",
+        "value": "16 points"
+    },
+    {
+        "max_val": 3.1,
+        "min_val": 3.1,
+        "number": 260,
+        "page": 16,
+        "text": "Bitch, I might be a Gucci fan. Bitch, you might be getting points for a Gucci style face paint of a 31-decker ice cream cone, resembling Baskin-Robbins' original flavors.",
+        "value": "3.1 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 261,
+        "page": 16,
+        "text": "Two wrapped and sealed 11-card booster packs of First-Year TCG: a Pok\\'{e}mon TCG addition that features cartoonish renditions of the Pocket Monsters that sprung up in your dorm this past September, as well as a few items and potions tailored best to their abilities.",
+        "value": "9 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 262,
+        "page": 16,
+        "text": "Draw a series of cartoons on at least 30 tissues such that when they are rapidly pulled out of a tissue box, they create an animation.",
+        "value": "6 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 263,
+        "page": 16,
+        "text": "A Spring 2015 Dwayne the Roc(k)-Films Johnson Calendar featuring an entire quarter's worth of wrasslin' films, real or fictional.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 19,
+        "min_val": 19,
+        "number": 264,
+        "page": 16,
+        "text": "Broadcast an FCC-Compliant Pirate Pirate Radio station from your headquarters. At some point between 2:00 and 3:00 p.m.\\ on Saturday, the Angstiest Judge will ride by on their bike with a radio and must hear music or a talk show. No points if ye station be not true to its nature.",
+        "value": "19 points"
+    },
+    {
+        "max_val": 125,
+        "min_val": 125,
+        "number": 265,
+        "page": 16,
+        "text": "A working, candle-powered, Erzgebirge Pyramid of at least four distinct levels, depicting at least four ancestral generations' life stories leading up to your birth.",
+        "value": "125 points"
+    },
+    {
+        "max_val": 65,
+        "min_val": 65,
+        "number": 266,
+        "page": 16,
+        "text": "An arcade cabinet featuring \\emph{Your Team's Theme: The Video Game}, programmed through any means possible. Programs such as Stencyl or equivalent are fair game. The cabinet must be playable using joysticks and buttons, and it must be decorated to resemble the game, just as a real arcade cabinet should be.",
+        "value": "65 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 267,
+        "page": 16,
+        "text": "Tallest liberty spike mohawk on a member of your team. It should be bald on the side, and absent of any rigid supports other than gel and the will of the Punk God, and be accompanied by video evidence of the cut being done during the Four Days.",
+        "value": "10 points; 5 extra points for the tallest spikes"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 268,
+        "page": 16,
+        "text": "An aerosol dry-erase marker spray can for nice-and-easy, erasable, on-campus graffiti.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 24,
+        "min_val": 24,
+        "number": 269,
+        "page": 16,
+        "text": "Recreate your favorite Mario Kart track, complete with environment and sound, which is scaled for your favorite die-cast toy car. Don't bust our balls though, we have every Mario Kart track memorized like the back of our hand.",
+        "value": "24 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 270,
+        "page": 16,
+        "text": "There's a Nintendo\\tr-unapproved, yet Jesus-approved, version of Wolfenstein 3D\\tm\\ out there. Find an original non re-print copy and bring it to us. We'll bring Wolfenstein 3D\\tm\\ and the Super Nintendo\\tm.",
+        "value": "32-bit points"
+    },
+    {
+        "max_val": 45,
+        "min_val": 45,
+        "number": 271,
+        "page": 16,
+        "text": "Team Judge's official photograph this year is your job. A simple photo is too easy and boring. Using a giant, functioning pinhole camera styled as a Polaroid\\tm\\ camera, take, develop, and fix an image that then shoots out from a slot in front. Your photographer should never have to leave the inside of the box and should remain completely safe from fumes.",
+        "value": "45 points"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 272,
+        "page": 17,
+        "text": "Tarot readers never tell us what we want to hear---until now! On Thursday, we'll give you a detailed description of the narrative we'd like from our reading, and at Judgment, you'll turn over cards that conveniently happen to match (no shuffling required).",
+        "value": "5 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 273,
+        "page": 17,
+        "text": "Sus of sestinas and petty pentinas, we want a heptina, octina, or nonina.",
+        "value": "5, 9, or 14 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 274,
+        "page": 17,
+        "text": "Look, we don't need astrology to tell us the Hunt is at the center of the universe, but it might help explain why Scav is always so hungry. Bring us a beautiful hand-drawn birth chart for our most precious Taurean bab, born at noon on the 15\\th\\ of May, 1987, in Chicago, Illinois. Don't forget to have your most esteemed astrologer on hand at Judgment to help explain how Scav's true nature is written in the stars.",
+        "value": "12 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 275,
+        "page": 17,
+        "text": "A sheet of temporary tattoos, themed around your team---think Captains' faces, your logo, and whatever other bits of iconography someone might want printed onto their skin for a finite amount of time. Don't forget to bring a damp washcloth on Sunday to ink the Judge!",
+        "value": "8 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 276,
+        "page": 17,
+        "text": "A sleeve made up of other teams' temp tats.",
+        "value": "1 point per team"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 277,
+        "page": 17,
+        "text": "You'll find out what we want; be that girl for the Hunt\\textellipsis and duh, what we (and Princess Tay) want is you presenting us with a Diet Coke-flavored red lipstick in a Mariska Hargitay-themed container.",
+        "value": "And that's how it works. That's how you get 10 points"
+    },
+    {
+        "max_val": 4,
+        "min_val": 4,
+        "number": 278,
+        "page": 17,
+        "text": "What makes the Great Vowel Shift so great? Um, try the fact that it's shaped like a beautiful butterfly! But what's going to be the next big thing, English vowel shift-wise? Make your guess, based entirely on what looks cute and pretty on a vowel chart. Bring an agile-tongued linguist to Judgment to demonstrate what common English words will sound like once this shift occurs.",
+        "value": "4 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 279,
+        "page": 17,
+        "text": "justscavvythings.tumblr.com, or your team's creatively-misspelled approximation thereof.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 21,
+        "min_val": 21,
+        "number": 280,
+        "page": 17,
+        "text": "We can't be expected to HAGS or KIT without a copy of your team's 2015 yearbook! It should come complete with stilted portraits of the whole gang, plus superlatives and at least a few mystifying inside-joke-y senior pages. You should bring a copy for the Judges (with signatures!), but you're also encouraged to print extras for your team and/or Special Collections.",
+        "value": "21 points"
+    },
+    {
+        "max_val": 15,
+        "min_val": 15,
+        "number": 281,
+        "page": 17,
+        "text": "Rayogram? More like BEY-ogram! Create a ***Flawless photogram portrait of her holiness Mrs. Carter.",
+        "value": "15 points"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 282,
+        "page": 17,
+        "text": "FEMINIST? GENERATIVIST? KEYNESIAN? It might be easier to put your professor's ideas in context if they taught Yonc\\'{e} style---that is, in front of giant light-up letters succinctly stating their intellectual philosophy, appearing at a crucial moment in their lecture.",
+        "value": "13 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 283,
+        "page": 17,
+        "text": "In today's tough economic times, a girl's gotta know how to fake an Orgasm\\tm! On Thursday, you'll receive swatches of three high-end beauty products; at Judgment, your most super-dupers will provide their best drugstore approximations for comparison.",
+        "value": "Up to 8 points for thriftiness and creativity"
+    },
+    {
+        "max_val": 5,
+        "min_val": 5,
+        "number": 284,
+        "page": 17,
+        "text": "Eyes may be the windows to the soul, but us INFJs need private time. Fix up your glasses with a li'l curtain rod and some fancy-ass drapes to close during moments of social anxiety.",
+        "value": "5 points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 285,
+        "page": 17,
+        "text": "I couldn't see it `til you took off your glasses and Bj\\\"{o}rked yourself, but it turns out you were beautiful all along! So that no one forgets your incredible transformation, document the process of Captain's Costume-ization makeover-montage-style.",
+        "value": "6 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 286,
+        "page": 17,
+        "text": "Wait, the Tinder profile you made for a big trashbag with some googly eyes on it got \\emph{how} many matches?",
+        "value": "0.05 points per match, max 200 matches; 0.5 points per match with another team's trashbag;  1 point for matching with Judge Goblin Head"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 287,
+        "page": 17,
+        "text": "\\emph{Seventeen}'s Hot Guy Panel has weighed in on such varied matters as New Year's Eve Flirting Tips to Spring Break Flirting Tips, but the Hot Guys have yet to break their legendary silence on the most important dating question of all: what would you do if you found out your girlfriend was actually a big trashbag with some googly eyes on it!?!? Track down a present or former member of the HGP and get the scoop.",
+        "value": "12 points"
+    },
+    {
+        "max_val": 10,
+        "min_val": 10,
+        "number": 288,
+        "page": 18,
+        "text": "Wait, your Sexy Trashbag with Some Googly Eyes Calendar of 2015 sold how many copies? Oh, none, you say? That's fine, but show it to us anyway.",
+        "value": "10 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 289,
+        "page": 18,
+        "text": "Fire a t-shirt cannon! Must be a historical t-shirt cannon (made before the Hunt). Please don't shoot any t-shirts that don't have it coming.",
+        "value": "6 points; 15 if you fire your team shirt; 25 if you bring it to Judgment for the Judge to fire"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 290,
+        "page": 18,
+        "text": "Stick a whole cooked fish into your mouth and pull out just a skeleton with a head and tail on it, \\`{a} la Heathcliff.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 291,
+        "page": 18,
+        "text": "A prosthetic chainsaw in place of one of your hands that when started in the usual way, does not spin a barbed metal chain at high speeds, but instead recites quotes from the Ash Williams trilogy.",
+        "value": "This is your 13 points"
+    },
+    {
+        "max_val": 12,
+        "min_val": 12,
+        "number": 292,
+        "page": 18,
+        "text": "These days, the Cookie Monster reminds children that cookies are a ``sometimes food,'' but let's hear what Muppet Harold the Fried Chicken Monster King has to say about \\emph{his} favorite food.",
+        "value": "12 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 293,
+        "page": 18,
+        "text": "Hypnotizing a chicken seems easy, but if the Wikipedia article on the practice is to be believed, debate on the optimal method is heated. Do some trials on a real chicken and submit a report\\textellipsis for science of course.",
+        "value": "4 piece points"
+    },
+    {
+        "max_val": 19,
+        "min_val": 19,
+        "number": 294,
+        "page": 18,
+        "text": "Judgment Day, just like the Chaos Theater, is a crucible that reveals the true core of every scavvy. At Judgment, one of your team members should level-up! They may not yet deserve the power of Love or Self-Respect, but I'm sure they've done \\emph{something} over the course of the four days to earn a sword (produced in the traditional manner, i.e.\\ from their own chest) and a stat-boost.",
+        "value": "19 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 295,
+        "page": 18,
+        "text": "Mid-century clowns used to paint their likenesses onto eggshells as a way of trademarking their livelihoods. Make us a three-specimen registry of the only clowns that don't completely skeeve people out these days: North American professional sports team mascots.",
+        "value": "8-ggs points"
+    },
+    {
+        "max_val": 14,
+        "min_val": 14,
+        "number": 296,
+        "page": 18,
+        "text": "Keep on bobblin': convert a wall mounted stuffed animal head into a terrifying \\#tooreal bobblehead.",
+        "value": "14 points"
+    },
+    {
+        "max_val": 7,
+        "min_val": 7,
+        "number": 297,
+        "page": 18,
+        "text": "The pirate Blackbeard used to weave gunpowder into his beard and light it on fire, so that the smoke and sparks made him appear to have come straight from Hell for his enemies' souls. You could probably wear a beard that replicates the smoke, lights, and terror, but without any actual fire.",
+        "value": "7 points"
+    },
+    {
+        "max_val": 6.9,
+        "min_val": 6.9,
+        "number": 298,
+        "page": 18,
+        "text": "The unwritten fourth law of robotics is that every robot just wants to get its bone on, but until now their lusts have been untutored. Create the Data Sutra, an illustrated book of sex positions and other intimate phenomena for robots based on the list of HTTP status codes.",
+        "value": "6.9 points"
+    },
+    {
+        "max_val": 17,
+        "min_val": 17,
+        "number": 299,
+        "page": 18,
+        "text": "Francisco de Goya's ``Saturn Devouring His Son'' made only from products manufactured and sold by Goya\\tr.",
+        "value": "17 points"
+    },
+    {
+        "max_val": 2,
+        "min_val": 2,
+        "number": 300,
+        "page": 18,
+        "text": "At Judgment, the tragically dorky Normal Scavvy drinks some of Steve Urkel's ``Cool Juice'' and transforms before our eyes into Norma[n] Scav\\'{e}, international playperson.",
+        "value": "2 points"
+    },
+    {
+        "max_val": 9.1,
+        "min_val": 9.1,
+        "number": 301,
+        "page": 18,
+        "text": "Comrade! Our glorious Socialist Republic may be long dissolved, but that doesn't mean you can't use your .su url to host slash fics of famous communists!",
+        "value": "9.1 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 302,
+        "page": 18,
+        "text": "TBA",
+        "value": "$\\Phi$ points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 303,
+        "page": 18,
+        "text": "Carl Kassel may have been on a hit radio program and have a sultry basso profundo, but he also has a little too much Midwestern amiability for a good answering machine message. Put Werner Herzog's voice on your home answering machine or voicemail.",
+        "value": "3 points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 304,
+        "page": 18,
+        "text": "Why don't you tell that chicken from Item 293 what Werner Herzog really thinks about it!",
+        "value": "1 point"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 305,
+        "page": 18,
+        "text": "We think Taylor Swift's \\emph{1989} is okay, but maybe it would fill that blank space in our heart if it were just \\emph{989}, and featured Gregorian chanting instead of Tay's vocals. Give us the iTunes samples for four songs.",
+        "value": "I can make the bad guys good for 11 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 306,
+        "page": 19,
+        "text": "We think Adele's albums, \\emph{19} and \\emph{21}, are pretty good, but maybe we could have had it all if one of them was \\emph{13\\sfrac{3}{4}}, which features angst-filled tracks and lyrics straight off of A-train's LJ. Give us an Adele-style music video along with the album's track listing.",
+        "value": "Never mind I'll find 13.75 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 307,
+        "page": 19,
+        "text": "Scotch tape. No, not Scotch Tape\\tm, but an edible film made from scotch and rolled on a tape dispenser.",
+        "value": "11 points if you give me the edible film; 3 more points if it is rolled up on a tape dispenser"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 308,
+        "page": 19,
+        "text": "The Swedish Chef says bork bork bork---what does an Icelandic chef say? We don't know, but your Captains sure do!  Descending from the peaks of \\\"{O}r\\ae faj\\\"{o}kull, your bj\\\"{o}dacious leaders are anything but bj\\\"{o}ring, lavished in the bizarre stylings and posh outfits of the Gu\\dh mundsd\\'{o}ttirs, Gu\\dh mundssons, and Gu\\dh mundsb\\\"{o}rn. We're expecting more than just a l'il Cygnus---feel free to delve into any and all fashion statements made by hers truly, as long as your captain is rebj\\\"{o}rn as Bj\\\"{o}rk.",
+        "value": "\\Thorn\\ points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 309,
+        "page": 19,
+        "text": "Clap Yer Hair, Gatsby! Or at the very least, a hair-like hat!",
+        "value": "10 further east than East Egg points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 310,
+        "page": 19,
+        "text": "Diamonds aren't every girl's best friend. Get us the ring that speaks to our Putinversteher nature.",
+        "value": "8 points for a convincing knock-off; 34 points if real"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 311,
+        "page": 19,
+        "text": "For some sort of PETA reasons we technically can't ask you to make a Body Worlds of the animal kingdom\\textellipsis but that doesn't mean you can't make a Body Worlds out of your stuffed animal kingdom!",
+        "value": "2 points per animal, max 5 animals"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 312,
+        "page": 19,
+        "text": "A bottle of Snapple\\tm\\ with a cap that reads a ``Snapple\\tm\\ Lie''.",
+        "value": "1 point"
+    },
+    {
+        "max_val": 13,
+        "min_val": 13,
+        "number": 313,
+        "page": 19,
+        "text": "Time and time again we have found Waldo, but we want to solve a puzzle that asks the question: ``Where the Fuck is Wallace?''",
+        "value": "13 points"
+    },
+    {
+        "max_val": 8,
+        "min_val": 8,
+        "number": 314,
+        "page": 19,
+        "text": "Insects are icky, but bug bits are beautiful. Who loves bug bits? Mememe! So OMG! Bring us examples of the hottest trend in cosmetic actives: bugs and snails (and puppy dog tails?).",
+        "value": "8 points"
+    },
+    {
+        "max_val": 3,
+        "min_val": 3,
+        "number": 315,
+        "page": 19,
+        "text": "Hey Captains, ever feel really horny but know that you can't do anything about it because you are way too busy Scavving it up to the max? Well repress your lust no more because this year Scav is going out of its way to get you lei'd! Present your traditional handmade lei to another team's Captain at Dinner.",
+        "value": "3 points"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 316,
+        "page": 19,
+        "text": "Give us Gwyneth's take on rubber cement, Nicky's Chinese, and the La Brea Tar Pits in the \\emph{Goop} Goop Issue.",
+        "value": "1 point each for Shop, Go, Be, Do, See, Make, and Get"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 317,
+        "page": 19,
+        "text": "One is the loneliest number. So celebrate the friends in your life by making a dual unicycle with two unicyclists peddling their hearts out.",
+        "value": "29 ``two seats, one wheel'' points"
+    },
+    {
+        "max_val": 6,
+        "min_val": 6,
+        "number": 318,
+        "page": 19,
+        "text": "Ian Ziering and friends have stopped Sharknadoes in Los Angeles, New York, and wherever the third one's going to happen, but how will they possibly get past the bureaucracy of sharks in the 1.5 minute trailer for \\emph{Sharknado 4: Shark NATO}?",
+        "value": "6 points"
+},
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 319,
+        "page": 19,
+        "text": "Make your mother a piece of macaroni artwork that depicts another item on this year's List.",
+        "value": "3 points if given to a random mom; 5 points if given to a Captain's mom; 7 points if given to a Judge's mom"
+    },
+    {
+        "max_val": -1,
+        "min_val": -1,
+        "number": 320,
+        "page": 19,
+        "text": "If NBC can get Carrie Underwood to sing a theme for Sunday Night Football, surely you can get her to sing a theme for Scav Olympics\\textellipsis right? We think so. [A touchdown of points",
+        "value": "that's 6) for the song and performance; 30 points if it's performed by Carrie"
+    },
+    {
+        "max_val": 16,
+        "min_val": 16,
+        "number": 321,
+        "page": 19,
+        "text": "Sleepovers are wonderful, but you can never predict what you may need throughout the night. Develop the sleepover survival package: a onesie for any weather with zip-off pants and sleeves; a utility belt of snacks, a night light, and a travel Ouija board.",
+        "value": "16 points"
+    },
+    {
+        "max_val": 9,
+        "min_val": 9,
+        "number": 322,
+        "page": 19,
+        "text": "We have hired Gene Parmesan to find out if President Zimmer is having any extra-UChicagital affairs. At two events of your choosing, have Gene Parmesan delight the Judges with his disguises and lack of intel.",
+        "value": "9 points"
+    },
+    {
+        "max_val": 1,
+        "min_val": 1,
+        "number": 323,
+        "page": 19,
+        "text": "You made it through another day, and we're proud of you!",
+        "value": "1 point"
+    }
+]
+</div>
+
+<script type="text/javascript" src="parakeet.js"></script>
+</html>
