@@ -45,10 +45,10 @@ $.getJSON(license_url, function(data) {
 
 
 function show_parakeet() {
+  fetch_next_parakeet();
   parakeets_shown++;
   $("#parakeetFrame").css("background-image", "url(" + next_parakeet.img_url + ")");
   $("#parakeetCredit").html("<a href='" + next_parakeet.page_url + "'>" + next_parakeet.alt + "</a>");
-  fetch_next_parakeet();
 }
 
 function fetch_next_parakeet() {
