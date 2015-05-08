@@ -7,7 +7,17 @@
 <link href="http://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" type="text/css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <style type="text/css">
-body {  background: url(parakeetbg.gif) repeat #6AAFDA }
+body { 
+background: repeating-linear-gradient(
+  to right,
+  #d180ff,
+  #d180ff 100px,
+  #ffd180 100px,
+  #ffd180 200px,
+  #ff80d1 200px,
+  #ff80d1 300px
+);
+}
 ::-moz-selection {
   background: #6AAFDA;
   color: #fff;
@@ -22,13 +32,13 @@ body {  background: url(parakeetbg.gif) repeat #6AAFDA }
   background-color: #fff;
   width: 1000px;
   padding: 1em 2em 2em 2em;
-  border: 1px solid #5896bc;
+  border: 1px solid #ffaa66;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-  -webkit-box-shadow: 0px 0px 5px 2px #5896bc;
-  -moz-box-shadow: 0px 0px 5px 2px #5896bc;
-  box-shadow: 0px 0px 5px 2px #5896bc;
+  -webkit-box-shadow: 0px 0px 5px 2px #ffaa66;
+  -moz-box-shadow: 0px 0px 5px 2px #ffaa66;
+  box-shadow: 0px 0px 5px 2px #ffaa66;
 }
 
 #about {
@@ -36,13 +46,13 @@ body {  background: url(parakeetbg.gif) repeat #6AAFDA }
   background-color: #fff;
   width: 1000px;
   padding: 1em 2em 2em 2em;
-  border: 1px solid #5896bc;
+  border: 1px solid #ffaa66;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-  -webkit-box-shadow: 0px 0px 5px 2px #5896bc;
-  -moz-box-shadow: 0px 0px 5px 2px #5896bc;
-  box-shadow: 0px 0px 5px 2px #5896bc;
+  -webkit-box-shadow: 0px 0px 5px 2px #ffaa66;
+  -moz-box-shadow: 0px 0px 5px 2px #ffaa66;
+  box-shadow: 0px 0px 5px 2px #ffaa66;
 }
 
 img {
@@ -67,11 +77,11 @@ h2 {
   margin: 0;
 }
 a, a:visited {
-  color: #5896bc;
+  color: #ffaa66;
   text-decoration: none;
   cursor: pointer;
 }
-a:hover {  color: #305c78 }
+a:hover {  color: #aa3300 }
 a:focus {  outline: thin dotted; }
 a:hover, a:active {  outline: 0; }
 p {  font-size: .9em }
@@ -123,8 +133,12 @@ h1, #controls, h2, .hide {
 }
 
 #woohoo {
-    color: #FF0000;
+    color: #CC0000;
     font-size: 1.5em;
+}
+
+input {
+    width: 3em;
 }
 </style>
 
